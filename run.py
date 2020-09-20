@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 import argparse
-import time
 import os
+import time
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
+DOWNLOADS = "/downloads/"
 
 
 def get_args():
@@ -13,9 +16,11 @@ def get_args():
     return parser.parse_args()
 
 
+requests = os.environ["REQUESTS"].split(" ")
+
 f = open("/save.html", "w")
 f.write('<html><head><meta charset="UTF-8"></head><body>')
-for url in os.environ["REQUESTS"].split(" "):
+for url in requests:
     print(url)
     f.write('<a href="' + url + '" download>click me</a>')
 f.write("</body></html>")
@@ -36,7 +41,7 @@ options.add_argument("--ignore-certificate-errors-spki-list=" + get_args().certh
 options.add_experimental_option(
     "prefs",
     {
-        "download.default_directory": "/downloads/",
+        "download.default_directory": DOWNLOADS,
         "download.prompt_for_download": False,
     },
 )
@@ -46,6 +51,19 @@ driver.get("file:///save.html")
 for el in driver.find_elements_by_tag_name("a"):
     el.click()
 
-# TODO: check that /downloads doesn't contain a .crdownload file
-time.sleep(5)
+
+# While downloading, Chrome saves files to <filename>.crdownload.
+# Once the download completes, they are moved to <filename>.
+def check_files(dir: str) -> bool:
+    files = os.listdir(DOWNLOADS)
+    if len(files) < len(requests):
+        return False
+    return len([f for f in files if ".crdownload" in f]) == 0
+
+
+while True:
+    if check_files(DOWNLOADS):
+        break
+    time.sleep(0.01)
+
 driver.close()
