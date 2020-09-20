@@ -21,7 +21,6 @@ requests = os.environ["REQUESTS"].split(" ")
 f = open("/save.html", "w")
 f.write('<html><head><meta charset="UTF-8"></head><body>')
 for url in requests:
-    print(url)
     f.write('<a href="' + url + '" download>click me</a>')
 f.write("</body></html>")
 f.close()
@@ -54,16 +53,14 @@ for el in driver.find_elements_by_tag_name("a"):
 
 # While downloading, Chrome saves files to <filename>.crdownload.
 # Once the download completes, they are moved to <filename>.
-def check_files(dir: str) -> bool:
+def check_files() -> bool:
     files = os.listdir(DOWNLOADS)
     if len(files) < len(requests):
         return False
     return len([f for f in files if ".crdownload" in f]) == 0
 
 
-while True:
-    if check_files(DOWNLOADS):
-        break
+while not check_files():
     time.sleep(0.01)
 
 driver.close()
