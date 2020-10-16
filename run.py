@@ -21,7 +21,7 @@ requests = os.environ["REQUESTS"].split(" ")
 f = open("/save.html", "w")
 f.write('<html><head><meta charset="UTF-8"></head><body>')
 for url in requests:
-    f.write('<a href="' + url + '" download>click me</a>')
+    f.write('<a href="' + url + '" target="_blank" download>click me</a>')
 f.write("</body></html>")
 f.close()
 
@@ -48,6 +48,7 @@ options.add_experimental_option(
 driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver", options=options)
 driver.get("file:///save.html")
 for el in driver.find_elements_by_tag_name("a"):
+    print("Downloading link " + el.get_attribute("href"))
     el.click()
 
 
