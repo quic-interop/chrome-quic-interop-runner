@@ -4,6 +4,8 @@ import argparse
 import os
 import time
 
+from urllib.parse import urlparse
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
@@ -26,6 +28,10 @@ f.write("</body></html>")
 f.close()
 
 
+server = urlparse(requests[0]).netloc
+print("Got server " + server)
+
+
 options = webdriver.ChromeOptions()
 options.gpu = False
 options.headless = True
@@ -33,7 +39,7 @@ options.binary_location = "/usr/bin/google-chrome-unstable"
 options.add_argument("--no-sandbox")
 options.add_argument("--enable-quic")
 options.add_argument("--quic-version=h3-29")
-options.add_argument("--origin-to-force-quic-on=server:443")
+options.add_argument("--origin-to-force-quic-on=" + server)
 options.add_argument("--log-net-log=/logs/chrome.json")
 options.add_argument("--net-log-capture-mode=IncludeSensitive")
 options.add_argument("--ignore-certificate-errors-spki-list=" + get_args().certhash)
