@@ -13,8 +13,13 @@ RUN apt-get update && \
 
 RUN pip3 install selenium
 
-COPY install_chromedriver.sh run.py run_endpoint.sh /
+ENV CHROMEDRIVER_VERSION="87.0.4280.20"
+RUN wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip" && \
+  unzip chromedriver_linux64.zip && \
+  mv chromedriver /usr/bin && \
+  chmod +x /usr/bin/chromedriver && \
+  rm chromedriver_linux64.zip
 
-RUN /install_chromedriver.sh
+COPY run.py run_endpoint.sh /
 
 ENTRYPOINT [ "/run_endpoint.sh" ]
