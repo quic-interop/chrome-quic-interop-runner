@@ -38,7 +38,7 @@ options.headless = True
 options.binary_location = "/usr/bin/google-chrome-beta"
 options.add_argument("--no-sandbox")
 options.add_argument("--enable-quic")
-options.add_argument("--quic-version=h3-29")
+options.add_argument("--quic-version=80")
 options.add_argument("--origin-to-force-quic-on=" + server)
 options.add_argument("--log-net-log=/logs/chrome.json")
 options.add_argument("--net-log-capture-mode=IncludeSensitive")
