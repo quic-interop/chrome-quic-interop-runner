@@ -8,6 +8,8 @@ from urllib.parse import urlparse
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 
 DOWNLOADS = "/downloads/"
 
@@ -51,9 +53,15 @@ options.add_experimental_option(
     },
 )
 
-driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver", options=options)
+
+service = Service(
+    executable_path="/usr/bin/chromedriver"
+)
+
+
+driver = webdriver.Chrome(service=service, options=options)
 driver.get("file:///save.html")
-for el in driver.find_elements_by_tag_name("a"):
+for el in driver.find_elements(By.TAG_NAME, "a"):
     print("Downloading link " + el.get_attribute("href"))
     el.click()
 
