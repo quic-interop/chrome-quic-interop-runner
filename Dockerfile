@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 RUN pip3 install selenium
 
-ENV CHROMEDRIVER_VERSION="111.0.5563.19"
+ENV CHROMEDRIVER_VERSION="113.0.5672.24"
 RUN wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip" && \
   unzip chromedriver_linux64.zip && \
   mv chromedriver /usr/bin && \
