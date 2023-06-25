@@ -13,12 +13,12 @@ RUN apt-get update && \
 
 RUN pip3 install selenium
 
-ENV CHROMEDRIVER_VERSION="113.0.5672.24"
-RUN wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip" && \
-  unzip chromedriver_linux64.zip && \
-  mv chromedriver /usr/bin && \
+ENV CHROMEDRIVER_VERSION="115.0.5790.40"
+RUN wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip" && \
+  unzip chromedriver-linux64.zip && \
+  mv chromedriver-linux64/chromedriver /usr/bin && \
   chmod +x /usr/bin/chromedriver && \
-  rm chromedriver_linux64.zip
+  rm chromedriver-linux64.zip
 
 COPY run.py run_endpoint.sh /
 
