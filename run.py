@@ -37,6 +37,8 @@ print("Got server " + server)
 options = webdriver.ChromeOptions()
 options.gpu = False
 options.binary_location = "/usr/bin/google-chrome-beta"
+options.add_argument("--enable-logging")
+options.add_argument("--v=1")
 options.add_argument("--no-sandbox")
 options.add_argument("--enable-quic")
 options.add_argument("--quic-version=80")
