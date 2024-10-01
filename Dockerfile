@@ -11,9 +11,9 @@ RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >
 RUN apt-get update && \
   apt-get install -y google-chrome-beta
 
-RUN pip3 install selenium
+RUN pip3 install selenium --break-system-packages
 
-ENV CHROMEDRIVER_VERSION="123.0.6312.46"
+ENV CHROMEDRIVER_VERSION="130.0.6723.19"
 RUN wget -q "https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip" && \
   unzip chromedriver-linux64.zip && \
   mv chromedriver-linux64/chromedriver /usr/bin && \
