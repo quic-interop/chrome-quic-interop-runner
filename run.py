@@ -72,7 +72,7 @@ def check_files() -> bool:
     files = os.listdir(DOWNLOADS)
     if len(files) < len(requests):
         return False
-    return len([f for f in files if ".crdownload" in f]) == 0
+    return len([f for f in files if ".crdownload" in f or ".com.google.Chrome." in f]) == 0
 
 
 while not check_files():
